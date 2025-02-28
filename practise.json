@@ -1,0 +1,135 @@
+{
+    "UsersData": {
+      "v7BDirPi68XVhXzp7ZNYFHk5M3H3": {
+        "readings": {
+          "1730042715": {
+            "gas_value": "200",
+            "in_humidity": "50",
+            "in_temperature": "25",
+            "out_humidity": "85",
+            "out_temperature": "30",
+            "rainfall": "150",
+            "weight": "8.00"
+          },
+          "1730043615": {
+            "gas_value": "205",
+            "in_humidity": "52",
+            "in_temperature": "26",
+            "out_humidity": "86",
+            "out_temperature": "31",
+            "rainfall": "160",
+            "weight": "8.50"
+          },
+          "1730044515": {
+            "gas_value": "210",
+            "in_humidity": "54",
+            "in_temperature": "27",
+            "out_humidity": "87",
+            "out_temperature": "32",
+            "rainfall": "170",
+            "weight": "9.00"
+          },
+          "1730045415": {
+            "gas_value": "215",
+            "in_humidity": "56",
+            "in_temperature": "28",
+            "out_humidity": "88",
+            "out_temperature": "33",
+            "rainfall": "180",
+            "weight": "9.50"
+          },
+          "1730046315": {
+            "gas_value": "220",
+            "in_humidity": "58",
+            "in_temperature": "29",
+            "out_humidity": "89",
+            "out_temperature": "34",
+            "rainfall": "190",
+            "weight": "10.00"
+          },
+          "1730047215": {
+            "gas_value": "225",
+            "in_humidity": "60",
+            "in_temperature": "30",
+            "out_humidity": "90",
+            "out_temperature": "35",
+            "rainfall": "200",
+            "weight": "10.50"
+          },
+          "1730048115": {
+            "gas_value": "230",
+            "in_humidity": "62",
+            "in_temperature": "31",
+            "out_humidity": "91",
+            "out_temperature": "36",
+            "rainfall": "210",
+            "weight": "11.00"
+          },
+          "1730049015": {
+            "gas_value": "235",
+            "in_humidity": "64",
+            "in_temperature": "32",
+            "out_humidity": "92",
+            "out_temperature": "37",
+            "rainfall": "220",
+            "weight": "11.50"
+          },
+          "1730049915": {
+            "gas_value": "240",
+            "in_humidity": "66",
+            "in_temperature": "33",
+            "out_humidity": "93",
+            "out_temperature": "38",
+            "rainfall": "230",
+            "weight": "12.00"
+          },
+          "1730050815": {
+            "gas_value": "245",
+            "in_humidity": "68",
+            "in_temperature": "34",
+            "out_humidity": "94",
+            "out_temperature": "39",
+            "rainfall": "240",
+            "weight": "12.50"
+          },
+          "1730051715": {
+            "gas_value": "250",
+            "in_humidity": "70",
+            "in_temperature": "35",
+            "out_humidity": "95",
+            "out_temperature": "40",
+            "rainfall": "250",
+            "weight": "13.00"
+          },
+          "1730052615": {
+            "gas_value": "255",
+            "in_humidity": "72",
+            "in_temperature": "36",
+            "out_humidity": "96",
+            "out_temperature": "41",
+            "rainfall": "260",
+            "weight": "13.50"
+          },
+          "1730053515": {
+            "gas_value": "260",
+            "in_humidity": "74",
+            "in_temperature": "37",
+            "out_humidity": "97",
+            "out_temperature": "42",
+            "rainfall": "270",
+            "weight": "14.00"
+          },
+          "1730054415": {
+            "gas_value": "265",
+            "in_humidity": "76",
+            "in_temperature": "38",
+            "out_humidity": "98",
+            "out_temperature": "43",
+            "rainfall": "280",
+            "weight": "14.50"
+          }
+        }
+      }
+    }
+  }
+  

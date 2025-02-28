@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "63697331019",
+    "firebase_url": "https://beehive-iot-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "beehive-iot",
+    "storage_bucket": "beehive-iot.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63697331019:android:ed97ef9a6a8fb34dd8fece",
+        "android_client_info": {
+          "package_name": "com.example.bee_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjd9X_7TW_GG-jr6qXk41JA7VvP1b5jP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
