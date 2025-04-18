@@ -40,9 +40,9 @@ class _TimeAnalysisState extends State<TimeAnalysis> {
           insideTempData = data.entries.map((entry) {
             final int unixTimestamp = int.tryParse(entry.key) ?? 0;
             final DateTime dateTime =
-                DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+            DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
             final double insideTemperature = double.tryParse(
-                    entry.value['in_temperature']?.toString() ?? '') ??
+                entry.value['in_temperature']?.toString() ?? '') ??
                 0.0;
             return TemperatureData(dateTime, insideTemperature);
           }).toList();
@@ -50,7 +50,7 @@ class _TimeAnalysisState extends State<TimeAnalysis> {
           outsideTempData = data.entries.map((entry) {
             final int unixTimestamp = int.parse(entry.key);
             final DateTime dateTime =
-                DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+            DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
             final double outsideTemperature =
                 double.tryParse(entry.value['out_temperature'].toString()) ??
                     0.0;
@@ -61,19 +61,20 @@ class _TimeAnalysisState extends State<TimeAnalysis> {
           insideHumData = data.entries.map((entry) {
             final int unixTimestamp = int.tryParse(entry.key) ?? 0;
             final DateTime dateTime =
-                DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+            DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
             final double insideHumidity =
                 double.tryParse(entry.value['in_humidity']?.toString() ?? '') ??
                     0.0;
+            print("sdss $insideHumidity");
             return HumData(dateTime, insideHumidity);
           }).toList();
 
           outsideHumData = data.entries.map((entry) {
             final int unixTimestamp = int.tryParse(entry.key) ?? 0;
             final DateTime dateTime =
-                DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+            DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
             final double outsideHumidity = double.tryParse(
-                    entry.value['out_humidity']?.toString() ?? '') ??
+                entry.value['out_humidity']?.toString() ?? '') ??
                 0.0;
             return HumData(dateTime, outsideHumidity);
           }).toList();
@@ -81,7 +82,7 @@ class _TimeAnalysisState extends State<TimeAnalysis> {
           weightData = data.entries.map((entry) {
             final int unixTimestamp = int.tryParse(entry.key) ?? 0;
             final DateTime dateTime =
-                DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+            DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
             final double weight =
                 double.tryParse(entry.value['weight']?.toString() ?? '') ?? 0.0;
             return WeightData(dateTime, weight);
@@ -99,11 +100,23 @@ class _TimeAnalysisState extends State<TimeAnalysis> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Time Analysis'),
+        title: const Text(
+          'Hive History',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: textColor,
+          ),
+        ),
         backgroundColor: primaryColor,
         centerTitle: true,
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(10),
+          ),
+        ),
       ),
-      backgroundColor: Color(0xFFFDF8D2),
+      backgroundColor: formBackground,
       body: Stack(
         children: [
           // Background image with opacity

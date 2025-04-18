@@ -9,37 +9,88 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: primaryColor,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard),
-          label:
-              dashboardText, // Replace with your actual dashboard text constant
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        // borderRadius: const BorderRadius.vertical(
+        //   top: Radius.circular(20),
+        // ),
+        child: BottomNavigationBar(
+          backgroundColor: primaryColor, // Yellow
+          elevation: 10,
+          items: [
+            BottomNavigationBarItem(
+              icon: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 248, 146, 48).withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.dashboard),
+              ),
+              label: dashboardText,
+              activeIcon: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 248, 146, 48).withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.dashboard),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 248, 146, 48).withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.logout),
+              ),
+              label: logoutButtonText,
+              activeIcon: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF5D4037),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.logout),
+              ),
+            ),
+          ],
+          selectedItemColor: const Color(0xFF5D4037), // Orange
+          unselectedItemColor: const Color(0xFF5D4037), // Dark brown
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 12,
+          ),
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) async {
+            if (index == 0) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ApiaryScreen()),
+              );
+            } else if (index == 1) {
+              await _auth.signout();
+              // Add navigation to login screen if needed
+            }
+          },
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.logout),
-          label:
-              logoutButtonText, // Replace with your actual logout text constant
-        ),
-      ],
-      selectedItemColor: Color.fromARGB(255, 242, 255, 242),
-      unselectedItemColor: Color.fromARGB(255, 44, 43, 43),
-      onTap: (index) async {
-        if (index == 0) {
-          // Navigate to the dashboard
-          print('Dashboard clicked');
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ApiaryScreen()),
-          ); // Ensure route is registered
-        } else if (index == 1) {
-          // Perform logout
-          print('Logout clicked');
-          await _auth.signout(); // Assuming `signOut` is your logout method
-          // Ensure route is registered
-        }
-      },
+      ),
     );
   }
 }

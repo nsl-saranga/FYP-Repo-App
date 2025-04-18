@@ -1,10 +1,9 @@
-// time_chart_widget.dart
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import '../models/temperature_data.dart';
 import '../models/humidity_data.dart';
+import '../utils/constants.dart';
 
 class TimeChartWidget extends StatelessWidget {
   final String title;
@@ -24,27 +23,27 @@ class TimeChartWidget extends StatelessWidget {
       return const Text('No data available');
     }
 
-    DateTime minDate = insideData
-        .map((item) => item.dateTime)
-        .reduce((value, element) => value.isBefore(element) ? value : element);
-    DateTime maxDate = insideData
-        .map((item) => item.dateTime)
-        .reduce((value, element) => value.isAfter(element) ? value : element);
+    // Sort data by dateTime to ensure proper line connection
+    final sortedInsideData = List.from(insideData)
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    final sortedOutsideData = List.from(outsideData)
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
+    // Use the earliest and latest dates from both datasets
+    List<DateTime> allDates = [
+      ...sortedInsideData.map((item) => item.dateTime),
+      ...sortedOutsideData.map((item) => item.dateTime)
+    ];
+
+    DateTime minDate = allDates.reduce((a, b) => a.isBefore(b) ? a : b);
+    DateTime maxDate = allDates.reduce((a, b) => a.isAfter(b) ? a : b);
 
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: customColor,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: SfCartesianChart(
         plotAreaBorderWidth: 0,
@@ -52,16 +51,33 @@ class TimeChartWidget extends StatelessWidget {
           minimum: minDate,
           maximum: maxDate,
           intervalType: DateTimeIntervalType.auto,
-          dateFormat: DateFormat('MM/dd/yyyy\nhh:mm a'),
+          dateFormat: DateFormat('MM/dd\nhh:mm a'),
           labelRotation: -45,
           labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+          majorGridLines: const MajorGridLines(width: 0),
         ),
-        title: ChartTitle(text: title),
-        legend: const Legend(isVisible: true),
+        primaryYAxis: NumericAxis(
+          majorGridLines: const MajorGridLines(width: 0.5),
+          axisLine: const AxisLine(width: 1),
+        ),
+        title: ChartTitle(
+          text: title,
+          textStyle: TextStyle(
+            color: textColor,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        legend: Legend(
+          isVisible: true,
+          position: LegendPosition.bottom,
+          alignment: ChartAlignment.center,
+          overflowMode: LegendItemOverflowMode.wrap,
+        ),
         tooltipBehavior: TooltipBehavior(enable: true),
         series: <CartesianSeries>[
           LineSeries<dynamic, DateTime>(
-            dataSource: insideData,
+            dataSource: sortedInsideData,
             xValueMapper: (dynamic item, _) => item.dateTime,
             yValueMapper: (dynamic item, _) {
               if (item is TemperatureData) {
@@ -72,11 +88,19 @@ class TimeChartWidget extends StatelessWidget {
               return 0;
             },
             name: 'Inside',
-            color: Colors.blue.withOpacity(0.7),
-            dataLabelSettings: const DataLabelSettings(isVisible: true),
+            color: Colors.blue,
+            width: 2.0,
+            markerSettings: const MarkerSettings(
+              isVisible: true,
+              shape: DataMarkerType.circle,
+              height: 4,
+              width: 4,
+            ),
+            // Explicitly disable data labels
+            dataLabelSettings: const DataLabelSettings(isVisible: false),
           ),
           LineSeries<dynamic, DateTime>(
-            dataSource: outsideData,
+            dataSource: sortedOutsideData,
             xValueMapper: (dynamic item, _) => item.dateTime,
             yValueMapper: (dynamic item, _) {
               if (item is TemperatureData) {
@@ -88,7 +112,15 @@ class TimeChartWidget extends StatelessWidget {
             },
             name: 'Outside',
             color: const Color.fromARGB(255, 248, 146, 48),
-            dataLabelSettings: const DataLabelSettings(isVisible: true),
+            width: 2.0,
+            markerSettings: const MarkerSettings(
+              isVisible: true,
+              shape: DataMarkerType.circle,
+              height: 4,
+              width: 4,
+            ),
+            // Explicitly disable data labels
+            dataLabelSettings: const DataLabelSettings(isVisible: false),
           ),
         ],
       ),

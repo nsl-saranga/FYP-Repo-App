@@ -19,25 +19,25 @@ class SingleTimeChartWidget extends StatelessWidget {
       return const Text('No data available');
     }
 
-    DateTime minDate = Data.map((item) => item.dateTime)
-        .reduce((value, element) => value.isBefore(element) ? value : element);
-    DateTime maxDate = Data.map((item) => item.dateTime)
-        .reduce((value, element) => value.isAfter(element) ? value : element);
+    // Sort data by dateTime to ensure proper line connection
+    final sortedData = List.from(Data)
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
+    // Debug: Print data points to check for issues
+    print('Chart Data Points for $title:');
+    for (var item in sortedData) {
+      print('DateTime: ${item.dateTime}, Weight: ${item.weight}');
+    }
+
+    DateTime minDate = sortedData.first.dateTime;
+    DateTime maxDate = sortedData.last.dateTime;
 
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: customColor,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: SfCartesianChart(
         plotAreaBorderWidth: 0,
@@ -45,21 +45,41 @@ class SingleTimeChartWidget extends StatelessWidget {
           minimum: minDate,
           maximum: maxDate,
           intervalType: DateTimeIntervalType.auto,
-          dateFormat: DateFormat('MM/dd/yyyy\nhh:mm a'),
+          dateFormat: DateFormat('MM/dd\nhh:mm a'),
           labelRotation: -45,
           labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+          majorGridLines: const MajorGridLines(width: 0),
         ),
-        title: ChartTitle(text: title),
-        legend: const Legend(isVisible: true),
+        primaryYAxis: NumericAxis(
+          majorGridLines: const MajorGridLines(width: 0),
+          axisLine: const AxisLine(width: 1),
+        ),
+        title: ChartTitle(
+          text: title,
+          textStyle: TextStyle(
+            color: textColor,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        legend: const Legend(isVisible: false), // No need for legend with single series
         tooltipBehavior: TooltipBehavior(enable: true),
         series: <CartesianSeries>[
           LineSeries<dynamic, DateTime>(
-            dataSource: Data,
+            dataSource: sortedData,
             xValueMapper: (dynamic item, _) => item.dateTime,
             yValueMapper: (dynamic item, _) => item.weight,
-            name: title.toString(),
+            name: "Weight",
             color: Colors.green,
-            dataLabelSettings: const DataLabelSettings(isVisible: true),
+            width: 2.5, // Make the line more visible
+            markerSettings: const MarkerSettings(
+              isVisible: true,
+              shape: DataMarkerType.circle,
+
+            ),
+            dataLabelSettings: const DataLabelSettings(isVisible: false),
+            // Enable this to check if there are nulls or zeros creating gaps
+            // emptyPointSettings: EmptyPointSettings(mode: EmptyPointMode.zero),
           ),
         ],
       ),
